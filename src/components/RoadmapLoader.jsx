@@ -15,7 +15,7 @@ function RoadmapLoader({ onLoad }) {
         title: data.title || slug,
         desc: data.extract || 'Описание загружено из Wikipedia',
         iconUrl,
-        category: 'Frontend', // можно улучшить
+        category: 'Frontend',
         status: 'not-started',
         note: ''
       };

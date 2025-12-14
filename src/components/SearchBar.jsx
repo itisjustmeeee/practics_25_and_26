@@ -6,7 +6,7 @@ function SearchBar({ onSearch }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onSearch(query);
-    }, 500); // debounce 500ms
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [query, onSearch]);

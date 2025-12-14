@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import TechnologyCard from '../components/TechnologyCard';
+import SearchBar from '../components/SearchBar';
+import { useTechnologies } from '../hooks/useTechnologies';
 
 function TechnologyList() {
   const [technologies, setTechnologies] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filtered = technologies.filter(tech =>
+    tech.title.toLowerCase().includes(searchQuery) ||
+    tech.desc.toLowerCase().includes(searchQuery)
+  );
 
   useEffect(() => {
     const saved = localStorage.getItem('technologies');
@@ -37,6 +45,8 @@ function TechnologyList() {
           +Добавить технологию
         </Link>
       </div>
+
+      <SearchBar onSearch={setSearchQuery} />
 
       <div className="tech-grid">
         {technologies.length === 0 ? (

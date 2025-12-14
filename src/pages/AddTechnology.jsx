@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTechnologies } from '../hooks/useTechnologies';
+import RoadmapLoader from '../components/RoadmapLoader';
 
 function AddTechnology() {
   const navigate = useNavigate();
@@ -9,6 +10,12 @@ function AddTechnology() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [category, setCategory] = useState('Frontend');
+
+  const handleLoad = (tech) => {
+    addTechnology(tech);
+    alert('Технология добавлена из внешнего API!');
+    navigate('/technologies');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +41,7 @@ function AddTechnology() {
   return (
     <div className="page add-technology-page">
       <h1>Добавить новую технологию</h1>
+      <RoadmapLoader onLoad={handleLoad} />
 
       <form onSubmit={handleSubmit} className="add-form">
         <div className="form-group">
