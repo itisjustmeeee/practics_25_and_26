@@ -6,7 +6,7 @@ const statusConfig = {
 };
 
 function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
-  const { label, color } = statusConfig[tech.status] || ` --- `  || statusConfig['not-started'];
+  const { label, color } = statusConfig[tech.status] || statusConfig['not-started'];
 
   return (
     <div
