@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTechnologies } from '../hooks/useTechnologies';
 
 function AddTechnology() {
   const navigate = useNavigate();
+  const { addTechnology } = useTechnologies();
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -11,27 +13,21 @@ function AddTechnology() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title.trim() || !desc.trim()) {
-      alert('Заполните название и описание');
+    if (!title.trim()) {
+      alert('Введите название технологии');
       return;
     }
 
-    const saved = localStorage.getItem('technologies');
-    const technologies = saved ? JSON.parse(saved) : [];
-
     const newTech = {
-      id: Date.now(),
       title: title.trim(),
-      desc: desc.trim(),
+      desc: desc.trim() || 'Без описания',
       category,
       status: 'not-started',
       note: ''
     };
 
-    technologies.push(newTech);
-    localStorage.setItem('technologies', JSON.stringify(technologies));
-
-    alert('Технология добавлена!');
+    addTechnology(newTech);
+    alert('Технология успешно добавлена!');
     navigate('/technologies');
   };
 
@@ -41,8 +37,9 @@ function AddTechnology() {
 
       <form onSubmit={handleSubmit} className="add-form">
         <div className="form-group">
-          <label>Название</label>
+          <label htmlFor="title">Название технологии</label>
           <input
+            id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -52,23 +49,28 @@ function AddTechnology() {
         </div>
 
         <div className="form-group">
-          <label>Описание</label>
+          <label htmlFor="desc">Описание (необязательно)</label>
           <textarea
+            id="desc"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
-            placeholder="Что вы хотите изучить..."
-            rows="5"
-            required
+            placeholder="Что вы планируете изучить..."
+            rows="4"
           />
         </div>
 
         <div className="form-group">
-          <label>Категория</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <label htmlFor="category">Категория</label>
+          <select
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="Frontend">Frontend</option>
             <option value="Backend">Backend</option>
             <option value="Data Science">Data Science</option>
             <option value="DevOps">DevOps</option>
+            <option value="Mobile">Mobile</option>
             <option value="Другое">Другое</option>
           </select>
         </div>
@@ -77,9 +79,9 @@ function AddTechnology() {
           <button type="submit" className="btn btn-primary">
             Добавить технологию
           </button>
-          <button 
-            type="button" 
-            className="btn" 
+          <button
+            type="button"
+            className="btn"
             onClick={() => navigate('/technologies')}
           >
             Отмена
