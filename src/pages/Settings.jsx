@@ -38,7 +38,6 @@ function Settings() {
                     if (confirm('Очистить все данные?')) {
                         localStorage.clear();
                         alert('localStorage очищен! Перезагрузите страницу.');
-                        window.location.reload();
                     }
                 }}>
                     Очистить localStorage
