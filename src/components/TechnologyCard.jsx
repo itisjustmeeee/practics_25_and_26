@@ -1,3 +1,4 @@
+import './TechnologyCard.css';
 
 const statusConfig = {
   'completed': { label: 'DONE', color: '#71ec4eff' },
