@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import TechnologyList from './pages/TechnologyList';
 import TechnologyDetail from './pages/TechnologyDetail';
 import AddTechnology from './pages/AddTechnology';
-import StatisticsPage from './pages/StatisticsPage';
+import Statistics from './pages/Statistics';
 
 function App() {
   return (
