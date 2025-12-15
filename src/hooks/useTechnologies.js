@@ -17,9 +17,18 @@ export function useTechnologies() {
     localStorage.setItem('technologies', JSON.stringify(technologies));
   }, [technologies]);
 
-  const updateStatus = (id, status) => {
-    setTechnologies(prev => prev.map(t => t.id === id ? { ...t, status } : t));
-  };
+
+    const updateStatus = (id) => {
+        setTechnologies(prev => prev.map(t => {
+            if (t.id === id) {
+                const order = ['not-started', 'in-progress', 'completed'];
+                const currentIndex = order.indexOf(t.status);
+                const nextIndex = (currentIndex + 1) % 3;
+                return { ...t, status: order[nextIndex] };
+            }
+            return t;
+        }));
+    };
 
   const updateNote = (id, note) => {
     setTechnologies(prev => prev.map(t => t.id === id ? { ...t, note } : t));

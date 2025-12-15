@@ -31,6 +31,7 @@ function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
         value={tech.note || ''}
         onChange={(e) => onNoteChange(tech.id, e.target.value)}
         onClick={(e) => e.stopPropagation()}
+        onFocus={(e) => e.stopPropagation()}
       />
 
       <div className="card-footer">
