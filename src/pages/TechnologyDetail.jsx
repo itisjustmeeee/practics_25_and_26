@@ -1,4 +1,3 @@
-// src/pages/TechnologyDetail.jsx
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import TechnologyCard from '../components/TechnologyCard';
@@ -47,15 +46,6 @@ function TechnologyDetail() {
     setTechnology(updated.find(t => t.id === id));
   };
 
-  if (!technology) {
-    return (
-      <div className="page">
-        <h1>Загрузка...</h1>
-        <p>Ищем технологию с ID {techId}...</p>
-      </div>
-    );
-  }
-
   if (technology === null) {
     return (
       <div className="page">
@@ -65,10 +55,21 @@ function TechnologyDetail() {
     );
   }
 
+  if (!technology) {
+    return (
+      <div className="page">
+        <h1>Технология не найдена</h1>
+        <Link to="/technologies" className="btn">
+          Назад к списку
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <Link to="/technologies" className="back-link">
-        ← Назад к списку
+        Назад к списку
       </Link>
 
       <div className="detail-header">
