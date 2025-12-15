@@ -13,7 +13,7 @@ function Home() {
           <Link to="/technologies" className="btn btn-primary">
             Перейти к списку технологий
           </Link>
-          <Link to="/add-technology" className="btn btn-secondary">
+          <Link to="/add-technology" className="btn btn-primary">
              +Добавить новую технологию
           </Link>
         </div>
