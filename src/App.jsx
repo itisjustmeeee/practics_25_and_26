@@ -7,6 +7,7 @@ import TechnologyDetail from './pages/TechnologyDetail';
 import AddTechnology from './pages/AddTechnology';
 import Statistics from './pages/Statistics';
 import Settings from './pages/Settings';
+import SetDeadline from './pages/SetDeadline';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/technology/:techId" element={<TechnologyDetail />} />
             <Route path="/add-technology" element={<AddTechnology />} />
             <Route path="/statistics" element={<Statistics />} />
+            <Route path="/technology/:techId/deadline" element={<SetDeadline />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<h1>404 — Страница не найдена</h1>} />
           </Routes>

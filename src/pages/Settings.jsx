@@ -1,61 +1,87 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useTechnologies } from '../hooks/useTechnologies';
 
 function Settings() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { technologies } = useTechnologies();
 
-    const clearData = () => {
-        if (window.confirm("Вы уверены в выборе? Все данные будут удалены")) {
-            localStorage.removeItem('technologies');
-            alert('Данные очищены. Перезагрузите страницу');
-            navigate('/');
-        }
+  const exportData = () => {
+    try {
+      const dataStr = JSON.stringify(technologies, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `technologies-backup-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      alert('Ошибка экспорта данных');
+    }
+  };
+
+  const importData = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const imported = JSON.parse(event.target.result);
+        if (!Array.isArray(imported)) throw new Error('Неверный формат');
+
+        const valid = imported.every(t => 
+          typeof t.title === 'string' && 
+          ['not-started', 'in-progress', 'completed'].includes(t.status)
+        );
+
+        if (!valid) throw new Error('Некорректные данные');
+
+        localStorage.setItem('technologies', JSON.stringify(imported));
+        alert('Данные успешно импортированы! Перезагрузите страницу.');
+        window.location.reload();
+      } catch (err) {
+        alert(`Ошибка импорта: ${err.message}`);
+      }
     };
+    reader.readAsText(file);
+  };
 
-    const exportData = () => {
-        const data = localStorage.getItem('technologies') || '[]';
-        const blob = new Blob([data], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `technologies-backup-${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    };
+  const clearData = () => {
+    if (window.confirm('Удалить все данные? Это действие необратимо!')) {
+      localStorage.removeItem('technologies');
+      alert('Данные очищены');
+      window.location.reload();
+    }
+  };
 
-    return (
-        <div className="page settings-page">
-            <h1>Настройки</h1>
+  return (
+    <div className="page settings-page">
+      <h1>Настройки</h1>
 
-            <section className="settings-section">
-                <h2>Управление данными</h2>
-                <button className="btn btn-danger" onClick={clearData}>
-                    Очистить все данные
-                </button>
-                <button className="btn btn-primary" onClick={exportData}>
-                    Экспорт данных (JSON)
-                </button>
-                <button onClick={() => {
-                    if (confirm('Очистить все данные?')) {
-                        localStorage.clear();
-                        alert('localStorage очищен! Перезагрузите страницу.');
-                    }
-                }}>
-                    Очистить localStorage
-                </button>
-            </section>
+      <section className="settings-section">
+        <h2>Экспорт / Импорт</h2>
+        <button className="btn btn-primary" onClick={exportData}>
+          Экспорт в JSON
+        </button>
+        <label className="btn btn-secondary" style={{ display: 'inline-block', cursor: 'pointer' }}>
+          Импорт из JSON
+          <input type="file" accept=".json" onChange={importData} style={{ display: 'none' }} />
+        </label>
+      </section>
 
-            <section className="settings-section">
-                <h2>Информация</h2>
-                <p>Версия приложения: 1.0</p>
-                <p>Данные сохраняются в localStorage браузера</p>
-                <p>Количество технологий: {JSON.parse(localStorage.getItem('technologies') || '[]').length}</p>
-            </section>
+      <section className="settings-section">
+        <h2>Опасные действия</h2>
+        <button className="btn btn-danger" onClick={clearData}>
+          Очистить все данные
+        </button>
+      </section>
 
-            <button className="btn" onClick={() => navigate(-1)}>
-                Назад
-            </button>
-        </div>
-    );
+      <button className="btn" onClick={() => navigate(-1)}>
+        Назад
+      </button>
+    </div>
+  );
 }
 
 export default Settings;

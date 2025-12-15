@@ -16,7 +16,6 @@ function TechnologyDetail() {
   }, [techId]);
 
   const updateStatus = (id) => {
-    // аналогично как в списке
     const saved = localStorage.getItem('technologies');
     if (saved) {
       const technologies = JSON.parse(saved);
@@ -54,7 +53,16 @@ function TechnologyDetail() {
 
   return (
     <div className="page">
-      <Link to="/technologies" className="back-link">--- Назад к списку</Link>
+      <Link to="/technologies" className="back-link">Назад к списку</Link>
+      <div className="detail-header">
+        <h1>{technology.title}</h1>
+        <Link 
+          to={`/technology/${techId}/deadline`} 
+          className="btn btn-secondary"
+        >
+          Установить срок изучения
+        </Link>
+      </div>
       <div className="detail-card">
         <TechnologyCard
           tech={technology}
