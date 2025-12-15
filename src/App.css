@@ -366,3 +366,22 @@
   clip: rect(0,0,0,0);
   border: 0;
 }
+
+.deadline-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.deadline-form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.error-message {
+  color: #fca5a5;
+  font-size: 0.9em;
+  margin-top: 8px;
+}

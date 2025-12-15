@@ -56,12 +56,6 @@ function TechnologyDetail() {
       <Link to="/technologies" className="back-link">Назад к списку</Link>
       <div className="detail-header">
         <h1>{technology.title}</h1>
-        <Link 
-          to={`/technology/${techId}/deadline`} 
-          className="btn btn-secondary"
-        >
-          Установить срок изучения
-        </Link>
       </div>
       <div className="detail-card">
         <TechnologyCard
@@ -69,6 +63,18 @@ function TechnologyDetail() {
           onStatusChange={updateStatus}
           onNoteChange={updateNote}
         />
+      </div>
+      <div className="card-footer">
+        <span className="category">{tech.category}</span>
+        <span className="status-badge" style={{ backgroundColor: color }}>
+          {label}
+        </span>
+        <Link 
+          to={`/technology/${techId}/deadline`} 
+          className="btn btn-small"
+        >
+          Срок изучения
+        </Link>
       </div>
     </div>
   );
