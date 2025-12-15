@@ -1,13 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTechnologies } from '../hooks/useTechnologies';
 
 function SetDeadline() {
   const { techId } = useParams();
   const navigate = useNavigate();
-  const { technologies, updateStatus } = useTechnologies();
-
-  const tech = technologies.find(t => t.id === parseInt(techId));
 
   const [deadline, setDeadline] = useState('');
   const [error, setError] = useState('');
@@ -41,38 +37,33 @@ function SetDeadline() {
     }
 
     const saved = localStorage.getItem('technologies');
-    if (!saved) return;
+    if (!saved) {
+      alert('Ошибка: данные не найдены');
+      return;
+    }
 
-    const technologies = JSON.parse(saved);
-    const updated = technologies.map(t => 
-      t.id === parseInt(techId) 
-        ? { ...t, deadline, status: 'in-progress' }
-        : t
-    );
+    try {
+      const technologies = JSON.parse(saved);
 
-    localStorage.setItem('technologies', JSON.stringify(updated));
+      const updated = technologies.map(t =>
+        t.id === parseInt(techId)
+          ? { ...t, deadline, status: 'in-progress' }
+          : t
+      );
 
-    alert(`Срок изучения установлен: ${deadline}`);
-    navigate('/technologies');
+      localStorage.setItem('technologies', JSON.stringify(updated));
 
-    updateStatus(parseInt(techId), 'in-progress');
+      alert(`Срок изучения успешно установлен: ${deadline}`);
+      navigate('/technologies');
+    } catch (e) {
+      console.error('Ошибка сохранения дедлайна', e);
+      alert('Произошла ошибка при сохранении');
+    }
   };
-
-  if (!tech) {
-    return (
-      <div className="page">
-        <h1>Технология не найдена</h1>
-        <button onClick={() => navigate('/technologies')} className="btn">
-            Назад
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="page deadline-page">
       <h1>Установить срок изучения</h1>
-      <h2>{tech.title}</h2>
 
       <form onSubmit={handleSubmit} className="deadline-form" noValidate>
         <div className="form-group">
