@@ -5,6 +5,7 @@ import TechnologyCard from '../components/TechnologyCard';
 function TechnologyDetail() {
   const { techId } = useParams();
   const [technology, setTechnology] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const saved = localStorage.getItem('technologies');
@@ -17,6 +18,7 @@ function TechnologyDetail() {
         console.error('Ошибка загрузки данных', e);
       }
     }
+    setLoading(false);
   }, [techId]);
 
   const updateStatus = (id) => {
@@ -46,11 +48,10 @@ function TechnologyDetail() {
     setTechnology(updated.find(t => t.id === id));
   };
 
-  if (technology === null) {
+  if (loading) {
     return (
       <div className="page">
         <h1>Загрузка технологии...</h1>
-        <p>ID: {techId}</p>
       </div>
     );
   }
