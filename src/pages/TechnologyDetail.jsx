@@ -77,7 +77,7 @@ function TechnologyDetail() {
         <h1>{technology.title}</h1>
         <Link 
           to={`/technology/${techId}/deadline`} 
-          className="btn-secondary"
+          className="btn btn-secondary"
         >
           Установить срок изучения
         </Link>

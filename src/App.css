@@ -385,3 +385,50 @@
   font-size: 0.9em;
   margin-top: 8px;
 }
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  min-width: 180px;
+}
+
+.btn-secondary {
+  background: #a78bfa;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #8b5cf6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1em;
+  }
+
+  .detail-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-header h1 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
