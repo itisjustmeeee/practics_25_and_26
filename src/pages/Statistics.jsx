@@ -1,24 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend
+} from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import { useTechnologies } from '../hooks/useTechnologies';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function Statistics() {
-  const [technologies, setTechnologies] = useState([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('technologies');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setTechnologies(parsed);
-        console.log('Загруженные технологии:', parsed);
-      } catch (e) {
-        console.error('Ошибка парсинга localStorage', e);
-      }
-    }
-  }, []);
+function StatisticsPage() {
+  const { technologies } = useTechnologies();
 
   const statusCount = {
     'not-started': technologies.filter(t => t.status === 'not-started').length,
@@ -33,11 +25,7 @@ function Statistics() {
     labels: ['Не начато', 'В процессе', 'Завершено'],
     datasets: [
       {
-        data: [
-          statusCount['not-started'],
-          statusCount['in-progress'],
-          statusCount.completed
-        ],
+        data: [statusCount['not-started'], statusCount['in-progress'], statusCount.completed],
         backgroundColor: ['#dd3131ff', '#2882f0ff', '#7dd838ff'],
         borderColor: ['#fff'],
         borderWidth: 2,
@@ -89,4 +77,4 @@ function Statistics() {
   );
 }
 
-export default Statistics;
+export default StatisticsPage;
