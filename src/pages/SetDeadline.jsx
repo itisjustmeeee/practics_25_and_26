@@ -40,9 +40,22 @@ function SetDeadline() {
       return;
     }
 
-    updateStatus(parseInt(techId), 'in-progress');
+    const saved = localStorage.getItem('technologies');
+    if (!saved) return;
+
+    const technologies = JSON.parse(saved);
+    const updated = technologies.map(t => 
+      t.id === parseInt(techId) 
+        ? { ...t, deadline, status: 'in-progress' }
+        : t
+    );
+
+    localStorage.setItem('technologies', JSON.stringify(updated));
+
     alert(`Срок изучения установлен: ${deadline}`);
     navigate('/technologies');
+
+    updateStatus(parseInt(techId), 'in-progress');
   };
 
   if (!tech) {

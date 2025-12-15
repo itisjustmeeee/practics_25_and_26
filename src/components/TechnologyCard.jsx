@@ -19,6 +19,25 @@ function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
 
         <p className="description">{tech.desc}</p>
 
+        {tech.deadline && (
+          <div className="deadline-info">
+            <strong>Дедлайн:</strong> {new Date(tech.deadline).toLocaleDateString('ru-RU')}
+      
+            {(() => {
+              const daysLeft = Math.ceil(
+                (new Date(tech.deadline) - new Date()) / (1000 * 60 * 60 * 24)
+              );
+              return daysLeft > 0 ? (
+                <span className="days-left"> ({daysLeft} дн. осталось)</span>
+              ) : daysLeft === 0 ? (
+                <span className="days-left"> (сегодня)</span>
+              ) : (
+                <span className="days-overdue"> (просрочено)</span>
+              );
+            })()}
+          </div>
+        )}
+
         <div className="card-footer-preview">
           <span className="category">{tech.category}</span>
           <span className="status-badge-preview" style={{ backgroundColor: color }}>

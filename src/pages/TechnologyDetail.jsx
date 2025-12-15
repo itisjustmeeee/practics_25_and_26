@@ -84,6 +84,34 @@ function TechnologyDetail() {
       </div>
 
       <div className="detail-card">
+        {technology.deadline && (
+          <div className="detail-deadline">
+            <h3>Дедлайн изучения</h3>
+            <p className="deadline-date">
+              {new Date(technology.deadline).toLocaleDateString('ru-RU', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </p>
+            {(() => {
+              const daysLeft = Math.ceil(
+                (new Date(technology.deadline) - new Date()) / (1000 * 60 * 60 * 24)
+              );
+              return (
+                <p className="deadline-countdown">
+                  {daysLeft > 0 
+                    ? `${daysLeft} дней осталось` 
+                    : daysLeft === 0 
+                      ? 'Сегодня последний день!'
+                      : `Просрочено на ${Math.abs(daysLeft)} дней`
+                  }
+                </p>
+              );
+            })()}
+          </div>
+        )}
         <TechnologyCard
           tech={technology}
           onStatusChange={updateStatus}

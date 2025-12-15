@@ -188,3 +188,51 @@
   background: rgba(255, 255, 255, 0.2);
   transform: scale(1.05);
 }
+
+.deadline-info {
+  margin: 16px 0;
+  padding: 12px;
+  background: rgba(251, 191, 36, 0.15);
+  border-left: 4px solid #fbbf24;
+  border-radius: 8px;
+  font-size: 0.95em;
+  text-align: center;
+}
+
+.days-left {
+  color: #7dd838ff;
+  font-weight: bold;
+}
+
+.days-overdue {
+  color: #dd3131ff;
+  font-weight: bold;
+}
+
+.detail-deadline {
+  background: rgba(251, 191, 36, 0.1);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  text-align: center;
+  border: 2px dashed #fbbf24;
+}
+
+.detail-deadline h3 {
+  margin: 0 0 12px 0;
+  color: #fbbf24;
+  font-size: 1.6em;
+}
+
+.deadline-date {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 12px 0;
+  color: #1e293b;
+}
+
+.deadline-countdown {
+  font-size: 1.2em;
+  margin: 0;
+  font-weight: 600;
+}
