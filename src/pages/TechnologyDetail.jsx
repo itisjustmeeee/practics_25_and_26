@@ -29,11 +29,20 @@ function TechnologyDetail() {
     const updated = technologies.map(t => {
       if (t.id === id) {
         const order = ['not-started', 'in-progress', 'completed'];
-        const next = (order.indexOf(t.status) + 1) % 3;
-        return { ...t, status: order[next] };
+        const currentIndex = order.indexOf(t.status);
+        const nextIndex = (currentIndex + 1) % 3;
+        const nextStatus = order[nextIndex];
+
+        if (nextStatus === 'completed') {
+          const { deadline, ...rest } = t;
+          return { ...rest, status: nextStatus };
+        }
+
+        return { ...t, status: nextStatus };
       }
       return t;
     });
+
     localStorage.setItem('technologies', JSON.stringify(updated));
     setTechnology(updated.find(t => t.id === parseInt(techId, 10)));
   };
