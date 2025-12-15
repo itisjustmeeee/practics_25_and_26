@@ -64,14 +64,9 @@ function Settings() {
         <button className="btn btn-primary" onClick={exportData}>
           Экспорт в JSON
         </button>
-        <label className="btn btn-primary" style={{ cursor: 'pointer' }}>
+        <label className="btn btn-primary import-btn" style={{ display: 'inline-block', cursor: 'pointer' }}>
           Импорт из JSON
-          <input 
-            type="file" 
-            accept=".json" 
-            onChange={importData} 
-            style={{ display: 'none' }} 
-          />
+          <input type="file" accept=".json" onChange={importData} style={{ display: 'none' }} />
         </label>
       </section>
 

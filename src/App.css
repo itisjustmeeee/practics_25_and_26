@@ -332,3 +332,44 @@
 .btn-secondary:hover {
   background: #8b5cf6;
 }
+
+.btn {
+  padding: 12px 24px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #000000;
+  color: white;
+}
+
+.btn:hover {
+  border-color: #a78bfa;
+  background: #1a1a1a;
+}
+
+.btn:active {
+  border-color: white;
+  background: #000000;
+  transform: scale(0.98);
+}
+
+.import-btn {
+  text-align: center;
+}
+
+.btn-primary {
+  background: #000000;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1a1a1a;
+  border-color: #a78bfa;
+}
+
+.btn-primary:active {
+  border-color: white;
+}
