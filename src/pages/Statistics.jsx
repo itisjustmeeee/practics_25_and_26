@@ -1,28 +1,24 @@
 import { useEffect, useState } from 'react';
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend
-} from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { color } from 'chart.js/helpers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function StatisticsPage() {
+function Statistics() {
   const [technologies, setTechnologies] = useState([]);
 
   useEffect(() => {
     const saved = localStorage.getItem('technologies');
     if (saved) {
       try {
-        setTechnologies(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        setTechnologies(parsed);
+        console.log('Загруженные технологии:', parsed);
       } catch (e) {
-        console.error('Ошибка парсинга данных из localStorage', e);
+        console.error('Ошибка парсинга localStorage', e);
       }
     }
-  }, []); // ← зависимость [] — эффект запускается один раз
+  }, []);
 
   const statusCount = {
     'not-started': technologies.filter(t => t.status === 'not-started').length,
@@ -37,8 +33,12 @@ function StatisticsPage() {
     labels: ['Не начато', 'В процессе', 'Завершено'],
     datasets: [
       {
-        data: [statusCount['not-started'], statusCount['in-progress'], statusCount.completed],
-        backgroundColor: ['#e84040ff', '#3184e9ff', '#71ec4eff'],
+        data: [
+          statusCount['not-started'],
+          statusCount['in-progress'],
+          statusCount.completed
+        ],
+        backgroundColor: ['#dd3131ff', '#2882f0ff', '#7dd838ff'],
         borderColor: ['#fff'],
         borderWidth: 2,
       },
@@ -49,7 +49,7 @@ function StatisticsPage() {
     responsive: true,
     plugins: {
       legend: { position: 'bottom' },
-      tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw}` } }
+      tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} шт.` } }
     }
   };
 
@@ -83,10 +83,10 @@ function StatisticsPage() {
           <Pie data={data} options={options} />
         </div>
       ) : (
-        <p>Нет данных для отображения графика</p>
+        <p className="empty-message">Добавьте технологии, чтобы увидеть статистику</p>
       )}
     </div>
   );
 }
 
-export default StatisticsPage;
+export default Statistics;
