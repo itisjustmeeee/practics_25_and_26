@@ -1,76 +1,19 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import TechnologyCard from '../components/TechnologyCard';
+import { useTechnologies } from '../hooks/useTechnologies';
 
 function TechnologyDetail() {
   const { techId } = useParams();
-  const [technology, setTechnology] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { technologies, updateStatus, updateNote } = useTechnologies();
 
-  useEffect(() => {
-    const saved = localStorage.getItem('technologies');
-    if (saved) {
-      try {
-        const technologies = JSON.parse(saved);
-        const tech = technologies.find(t => t.id === parseInt(techId, 10));
-        setTechnology(tech || null);
-      } catch (e) {
-        console.error('Ошибка загрузки данных', e);
-      }
-    }
-    setLoading(false);
-  }, [techId]);
-
-  const updateStatus = (id) => {
-    const saved = localStorage.getItem('technologies');
-    if (!saved) return;
-
-    const technologies = JSON.parse(saved);
-    const updated = technologies.map(t => {
-      if (t.id === id) {
-        const order = ['not-started', 'in-progress', 'completed'];
-        const currentIndex = order.indexOf(t.status);
-        const nextIndex = (currentIndex + 1) % 3;
-        const nextStatus = order[nextIndex];
-
-        if (nextStatus === 'completed') {
-          const { deadline, ...rest } = t;
-          return { ...rest, status: nextStatus };
-        }
-
-        return { ...t, status: nextStatus };
-      }
-      return t;
-    });
-
-    localStorage.setItem('technologies', JSON.stringify(updated));
-    setTechnology(updated.find(t => t.id === parseInt(techId, 10)));
-  };
-
-  const updateNote = (id, note) => {
-    const saved = localStorage.getItem('technologies');
-    if (!saved) return;
-
-    const technologies = JSON.parse(saved);
-    const updated = technologies.map(t => t.id === id ? { ...t, note } : t);
-    localStorage.setItem('technologies', JSON.stringify(updated));
-    setTechnology(updated.find(t => t.id === id));
-  };
-
-  if (loading) {
-    return (
-      <div className="page">
-        <h1>Загрузка технологии...</h1>
-      </div>
-    );
-  }
+  const technology = technologies.find(t => t.id === parseInt(techId, 10));
 
   if (!technology) {
     return (
       <div className="page">
         <h1>Технология не найдена</h1>
         <Link to="/technologies" className="btn">
-          Назад к списку
+          ← Назад к списку
         </Link>
       </div>
     );
@@ -79,13 +22,13 @@ function TechnologyDetail() {
   return (
     <div className="page">
       <Link to="/technologies" className="back-link">
-        Назад к списку
+        ← Назад к списку
       </Link>
 
       <div className="detail-header">
         <h1>{technology.title}</h1>
         <Link 
-          to={`/technology/${techId}/deadline`} 
+          to={`/technology/${technology.id}/deadline`} 
           className="btn btn-secondary"
         >
           Установить срок изучения
@@ -121,6 +64,7 @@ function TechnologyDetail() {
             })()}
           </div>
         )}
+
         <TechnologyCard
           tech={technology}
           onStatusChange={updateStatus}
