@@ -23,10 +23,8 @@ function TechnologyList() {
         </Link>
       </div>
 
-      {/* Поиск */}
       <SearchBar onSearch={setSearchQuery} />
 
-      {/* Список карточек */}
       <div className="tech-grid">
         {filteredTechnologies.length === 0 ? (
           <p className="empty-message">
@@ -45,6 +43,18 @@ function TechnologyList() {
             />
           ))
         )}
+      </div>
+      <div className="card-footer">
+        <span className="category">{tech.category}</span>
+        <span className="status-badge" style={{ backgroundColor: color }}>
+          {label}
+        </span>
+        <Link 
+          to={`/technology/${techId}/deadline`} 
+          className="btn btn-small"
+        >
+          Срок изучения
+        </Link>
       </div>
     </div>
   );
