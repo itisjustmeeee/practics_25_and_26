@@ -61,13 +61,21 @@ function Settings() {
 
       <section className="settings-section">
         <h2>Экспорт / Импорт</h2>
-        <button className="btn btn-primary" onClick={exportData}>
-          Экспорт в JSON
-        </button>
-        <label className="btn btn-secondary" style={{ display: 'inline-block', cursor: 'pointer' }}>
-          Импорт из JSON
-          <input type="file" accept=".json" onChange={importData} style={{ display: 'none' }} />
-        </label>
+        <div className="data-actions" style={{ display: 'flex', gap: '16px', marginTop: '20px', justifyContent: 'center' }}>
+          <button className="btn btn-primary" onClick={exportData}>
+            Экспорт в JSON
+          </button>
+
+          <label className="btn btn-primary" style={{ cursor: 'pointer' }}>
+            Импорт из JSON
+            <input 
+              type="file" 
+              accept=".json" 
+              onChange={importData} 
+              style={{ display: 'none' }} 
+            />
+          </label>
+        </div>
       </section>
 
       <section className="settings-section">
