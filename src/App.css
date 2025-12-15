@@ -315,13 +315,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
   flex-wrap: wrap;
   gap: 20px;
+  margin: 20px 0 40px 0;
+  padding: 0 10px;
 }
 
 .detail-header h1 {
   margin: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .btn-secondary {
@@ -425,10 +428,16 @@
   .detail-header {
     flex-direction: column;
     align-items: stretch;
+    text-align: center;
   }
 
   .detail-header h1 {
     margin-bottom: 20px;
-    text-align: center;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
 }
