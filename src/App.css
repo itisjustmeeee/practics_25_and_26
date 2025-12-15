@@ -333,43 +333,36 @@
   background: #8b5cf6;
 }
 
-.btn {
+.btn-import {
+  background-color: #000000;
+  color: white;
   padding: 12px 24px;
   border: 2px solid transparent;
   border-radius: 12px;
+  font-weight: bold;
   font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
   transition: all 0.3s ease;
-  background: #000000;
-  color: white;
-}
-
-.btn:hover {
-  border-color: #a78bfa;
-  background: #1a1a1a;
-}
-
-.btn:active {
-  border-color: white;
-  background: #000000;
-  transform: scale(0.98);
-}
-
-.import-btn {
   text-align: center;
 }
 
-.btn-primary {
-  background: #000000;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #1a1a1a;
+.btn-import:hover {
   border-color: #a78bfa;
+  background-color: #1a1a1a;
 }
 
-.btn-primary:active {
+.btn-import:active {
   border-color: white;
+  background-color: #333333;
+  transform: scale(0.98);
+}
+
+.btn-import input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
 }
