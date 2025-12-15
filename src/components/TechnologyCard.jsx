@@ -1,29 +1,40 @@
+import { Link } from 'react-router-dom';
 import './TechnologyCard.css';
 
 const statusConfig = {
-  'completed': { label: 'COMPLETE', color: '#7dd838ff' },
-  'in-progress': { label: 'IN PROGRESS', color: '#2882f0ff' },
-  'not-started': { label: 'NOT STARTED', color: '#dd3131ff' }
+  'completed': { label: 'ЗАВЕРШЕНО', color: '#7dd838ff' },
+  'in-progress': { label: 'В ПРОЦЕССЕ', color: '#2882f0ff' },
+  'not-started': { label: 'НЕ НАЧАТО', color: '#dd3131ff' }
 };
 
 function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
   const { label, color } = statusConfig[tech.status] || statusConfig['not-started'];
 
   return (
-    <div
-      className={`tech-card ${tech.status}`}
-      onClick={() => onStatusChange(tech.id)}
-      style={{
-        borderColor: color,
-        boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
-        transition: 'all 0.4s ease'
-      }}
-    >
-      <div className="card-header">
-        <h3>{tech.title}</h3>
-      </div>
+    <div className={`tech-card ${tech.status}`}>
+      <Link to={`/technology/${tech.id}`} className="card-link">
+        <div className="card-header">
+          <h3>{tech.title}</h3>
+        </div>
 
-      <p className="description">{tech.desc}</p>
+        <p className="description">{tech.desc}</p>
+
+        <div className="card-footer-preview">
+          <span className="category">{tech.category}</span>
+          <span className="status-badge-preview" style={{ backgroundColor: color }}>
+            {label}
+          </span>
+        </div>
+      </Link>
+
+      <div className="status-change-section" onClick={(e) => e.stopPropagation()}>
+        <button
+          className="btn-status-change"
+          onClick={() => onStatusChange(tech.id)}
+        >
+          Изменить статус → {label}
+        </button>
+      </div>
 
       <textarea
         className="note-input"
@@ -34,15 +45,8 @@ function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
         onFocus={(e) => e.stopPropagation()}
       />
 
-      <div className="card-footer">
-        <span className="category">{tech.category}</span>
-        <span className="status-badge" style={{ backgroundColor: color }}>
-          {label}
-        </span>
-      </div>
-
       <div className="click-hint">
-        Нажмите карточку, чтобы изменить статус
+        Кликните по карточке для детального просмотра
       </div>
     </div>
   );
