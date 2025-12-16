@@ -96,13 +96,3 @@ export function CustomThemeProvider({ children }) {
     </ThemeContext.Provider>
   );
 }
-
-export function ThemeToggleButton() {
-  const { mode, toggleTheme } = useThemeToggle();
-
-  return (
-    <IconButton onClick={toggleTheme} color="inherit">
-      {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-    </IconButton>
-  );
-}

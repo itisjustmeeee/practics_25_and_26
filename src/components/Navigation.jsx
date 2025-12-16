@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { ThemeToggleButton } from '../theme/ThemeProvider';
+import ThemeToggleButton from './ThemeToggleButton';
 
 function Navigation() {
   const location = useLocation();
