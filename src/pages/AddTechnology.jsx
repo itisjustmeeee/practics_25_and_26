@@ -74,6 +74,7 @@ function AddTechnology() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder='введите название технологии'
+            fullWidth
             margin="normal"
             sx={{ mt: 3 }}
           />
