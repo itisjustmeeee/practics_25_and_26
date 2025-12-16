@@ -31,64 +31,32 @@ export function CustomThemeProvider({ children }) {
   const theme = createTheme({
     palette: {
       mode,
-      primary: {
-        main: '#a78bfa',
-      },
+      primary: { main: '#a78bfa' },
       background: {
-        default: mode === 'dark' ? '#121212' : '#f1f5f9',
+        default: mode === 'dark' ? '#0f0f0f' : '#f8fafc',
         paper: mode === 'dark' ? '#1e293b' : '#ffffff',
       },
       text: {
-        primary: mode === 'dark' ? '#f1f5f9' : '#0f172a',
-        secondary: mode === 'dark' ? '#94a3b8' : '#475569',
+        primary: mode === 'dark' ? '#f1f5f9' : '#1e293b',
+        secondary: mode === 'dark' ? '#94a3b8' : '#64748b',
       },
     },
     components: {
       MuiPaper: {
         styleOverrides: {
           root: {
-            backgroundColor: mode === 'dark' ? '#1e293b' : '#ffffff',
             backgroundImage: 'none',
             boxShadow: mode === 'dark' 
               ? '0 8px 32px rgba(0, 0, 0, 0.4)' 
               : '0 8px 32px rgba(0, 0, 0, 0.08)',
-            border: mode === 'light' ? '1px solid #e2e8f0' : '1px solid #334155',
-            borderRadius: '16px',
+            border: mode === 'dark' ? '1px solid #334155' : '1px solid #e2e8f0',
           },
         },
       },
       MuiTypography: {
         styleOverrides: {
           root: {
-            color: mode === 'dark' ? '#f1f5f9' : '#0f172a',
-          },
-          h1: { color: mode === 'dark' ? '#fbbf24' : '#1e293b' },
-          h2: { color: mode === 'dark' ? '#fbbf24' : '#1e293b' },
-          h3: { color: mode === 'dark' ? '#e2e8f0' : '#1e293b' },
-        },
-      },
-      MuiLink: {
-        styleOverrides: {
-          root: {
-            color: mode === 'dark' ? '#e2e8f0' : '#1e293b',
-          },
-        },
-      },
-      // Инпуты и селекты
-      MuiInputBase: {
-        styleOverrides: {
-          root: {
-            color: mode === 'dark' ? '#f1f5f9' : '#0f172a',
-          },
-          input: {
-            color: mode === 'dark' ? '#f1f5f9' : '#0f172a',
-          },
-        },
-      },
-      MuiSelect: {
-        styleOverrides: {
-          select: {
-            color: mode === 'dark' ? '#f1f5f9' : '#0f172a',
+            color: mode === 'dark' ? '#f1f5f9' : '#1e293b',
           },
         },
       },

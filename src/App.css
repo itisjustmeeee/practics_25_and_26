@@ -456,3 +456,46 @@
     margin-top: 16px;
   }
 }
+
+.card-block,
+.feature-card,
+.settings-section,
+.api-loader-section,
+.manual-add-section,
+.add-form,
+.deadline-form,
+.detail-deadline {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+:root {
+  --card-shadow-light: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --card-border-light: 1px solid #e2e8f0;
+  --card-bg-light: #ffffff;
+
+  --card-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --card-border-dark: 1px solid #334155;
+  --card-bg-dark: #1e293b;
+}
+
+[data-theme="light"] {
+  --card-bg: var(--card-bg-light);
+  --card-shadow: var(--card-shadow-light);
+  --card-border: var(--card-border-light);
+  --text-primary: #1e293b;
+}
+
+[data-theme="dark"] {
+  --card-bg: var(--card-bg-dark);
+  --card-shadow: var(--card-shadow-dark);
+  --card-border: var(--card-border-dark);
+  --text-primary: #f1f5f9;
+}

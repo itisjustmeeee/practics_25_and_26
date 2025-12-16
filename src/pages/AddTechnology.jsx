@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import RoadmapLoader from '../components/RoadmapLoader';
 import { useTechnologies } from '../hooks/useTechnologies';
 import { useNotification } from '../components/NotificationProvider';
@@ -44,45 +51,70 @@ function AddTechnology() {
   };
 
   return (
-    <div className="page add-technology-page">
-      <h1>Добавить новую технологию</h1>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Typography variant="h3" textAlign="center" gutterBottom>
+        Добавить новую технологию
+      </Typography>
 
-      <section className="api-loader-section">
-        <h2>Загрузить из внешнего источника</h2>
+      <Paper elevation={6} sx={{ p: 5, mt: 4 }}>
+        <Typography variant="h5" gutterBottom color="primary">
+          Загрузить из внешнего источника
+        </Typography>
         <RoadmapLoader onLoad={handleApiAdd} />
-      </section>
+      </Paper>
 
-      <section className="manual-add-section">
-        <h2>Или добавить вручную</h2>
-        <form onSubmit={handleManualAdd} className="add-form">
-          <div className="form-group">
-            <label>Название</label>
-            <input value={title} onChange={e => setTitle(e.target.value)} required />
-          </div>
-          <div className="form-group">
-            <label>Описание</label>
-            <textarea value={desc} onChange={e => setDesc(e.target.value)} />
-          </div>
-          <div className="form-group">
-            <label>Категория</label>
-            <select value={category} onChange={e => setCategory(e.target.value)}>
-              <option>Fronend</option>
-              <option>Backend</option>
-              <option>Data Science</option>
-              <option>DevOps</option>
-              <option>Mobile</option>
-              <option>Другое</option>
-            </select>
-          </div>
-          <div className="form-actions">
-            <button type="submit" className="btn btn-primary">Добавить</button>
-            <button type="button" className="btn" onClick={() => navigate('/technologies')}>
+      <Paper elevation={6} sx={{ p: 5, mt: 6 }}>
+        <Typography variant="h5" gutterBottom color="primary">
+          Или добавить вручную
+        </Typography>
+
+        <Box component="form" onSubmit={handleManualAdd} sx={{ mt: 3 }}>
+          <TextField
+            label="Название технологии"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          />
+
+          <TextField
+            label="Описание (необязательно)"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            fullWidth
+            multiline
+            rows={4}
+            margin="normal"
+          />
+
+          <TextField
+            select
+            label="Категория"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            fullWidth
+            margin="normal"
+          >
+            <MenuItem value="Frontend">Frontend</MenuItem>
+            <MenuItem value="Backend">Backend</MenuItem>
+            <MenuItem value="Data Science">Data Science</MenuItem>
+            <MenuItem value="DevOps">DevOps</MenuItem>
+            <MenuItem value="Mobile">Mobile</MenuItem>
+            <MenuItem value="Другое">Другое</MenuItem>
+          </TextField>
+
+          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button type="submit" variant="contained" size="large">
+              Добавить технологию
+            </Button>
+            <Button variant="outlined" size="large" onClick={() => navigate('/technologies')}>
               Отмена
-            </button>
-          </div>
-        </form>
-      </section>
-    </div>
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
 

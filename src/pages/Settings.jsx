@@ -1,4 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { useNotification } from '../components/NotificationProvider';
 
 function Settings() {
@@ -11,8 +16,9 @@ function Settings() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `technologies-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = `technologies-backup-${new Date().toISOString().slice(0,10)}.json`;
     a.click();
+    URL.revokeObjectURL(url);
     showNotification?.('Данные экспортированы', 'success');
   };
 
@@ -36,39 +42,61 @@ function Settings() {
   };
 
   const clearData = () => {
-    if (confirm('Удалить все данные?')) {
+    if (window.confirm('Вы уверены? Все данные будут удалены навсегда!')) {
       localStorage.removeItem('technologies');
-      showNotification?.('Все данные удалены', 'warning');
+      showNotification?.('Все данные очищены', 'warning');
       window.location.reload();
     }
   };
 
   return (
-    <div className="page settings-page">
-      <h1>Настройки</h1>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Typography variant="h3" textAlign="center" gutterBottom>
+        Настройки
+      </Typography>
 
-      <section className="settings-section">
-        <h2>Экспорт / Импорт</h2>
-        <button className="btn btn-primary" onClick={exportData}>
-          Экспорт в JSON
-        </button>
-        <label className="btn btn-secondary">
-          Импорт из JSON
-          <input type="file" accept=".json" onChange={importData} style={{ display: 'none' }} />
-        </label>
-      </section>
+      <Paper elevation={6} sx={{ p: 5, mt: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          Экспорт / Импорт данных
+        </Typography>
 
-      <section className="settings-section">
-        <h2>Опасные действия</h2>
-        <button className="btn btn-danger" onClick={clearData}>
-          Очистить все данные
-        </button>
-      </section>
+        <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', flexWrap: 'wrap', mt: 3 }}>
+          <Button variant="contained" onClick={exportData}>
+            Экспорт в JSON
+          </Button>
 
-      <button className="btn" onClick={() => navigate(-1)}>
-        ← Назад
-      </button>
-    </div>
+          <label>
+            <Button variant="contained" component="span">
+              Импорт из JSON
+            </Button>
+            <input
+              type="file"
+              accept=".json"
+              onChange={importData}
+              style={{ display: 'none' }}
+            />
+          </label>
+        </Box>
+      </Paper>
+
+      <Paper elevation={6} sx={{ p: 5, mt: 6 }}>
+        <Typography variant="h5" gutterBottom color="error">
+          Опасные действия
+        </Typography>
+
+        <Box textAlign="center" sx={{ mt: 3 }}>
+          <Button variant="contained" color="error" onClick={clearData}>
+            Очистить все данные
+          </Button>
+        </Box>
+      </Paper>
+
+      <Box textAlign="center" sx={{ mt: 5 }}>
+        <Button variant="text" onClick={() => navigate(-1)}>
+          ← Назад
+        </Button>
+      </Box>
+    </Container>
   );
 }
 
