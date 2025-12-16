@@ -69,16 +69,14 @@ function AddTechnology() {
         </Typography>
 
         <Box component="form" onSubmit={handleManualAdd} sx={{ mt: 4 }}>
-          <div className="title-input-container">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Введите название технологии"
-              className="title-input-large"
-              required
-            />
-          </div>
+          <TextField
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder='введите название технологии'
+            margin="normal"
+            sx={{ mt: 3 }}
+          />
 
           <TextField
             label="Описание (необязательно)"
