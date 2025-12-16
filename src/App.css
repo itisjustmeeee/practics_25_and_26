@@ -566,37 +566,41 @@
   background: #475569;
 }
 
-.title-input-container {
-  text-align: center;
-  margin: 30px 0;
-}
-
-.title-input-large {
+.title-input-large,
+.search-input-large {
   width: 100%;
   max-width: 700px;
-  padding: 20px 32px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  text-align: center;
-  border-radius: 50px;
-  border: 3px solid #e2e8f0;
-  background: #ffffff;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  outline: none;
+  padding: 20px 32px !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  border-radius: 50px !important;
+  border: 3px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #1e293b !important; /* тёмный текст */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+  outline: none !important;
+  margin: 30px auto !important;
+  display: block !important;
 }
 
-.title-input-large:focus {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.2);
+.title-input-large:focus,
+.search-input-large:focus {
+  border-color: #a78bfa !important;
+  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.3) !important;
 }
 
-[data-theme="dark"] .title-input-large {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
+/* Тёмная тема — переопределяем цвета */
+[data-theme="dark"] .title-input-large,
+[data-theme="dark"] .search-input-large {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f1f5f9 !important; /* светлый текст */
 }
 
-[data-theme="dark"] .title-input-large:focus {
-  border-color: #a78bfa;
+[data-theme="dark"] .title-input-large:focus,
+[data-theme="dark"] .search-input-large:focus {
+  border-color: #a78bfa !important;
+  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.4) !important;
 }
