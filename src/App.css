@@ -441,3 +441,18 @@
     margin: 0 auto;
   }
 }
+
+.nav-actions {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+  .nav-actions {
+    position: static;
+    transform: none;
+    margin-top: 16px;
+  }
+}
