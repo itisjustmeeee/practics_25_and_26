@@ -20,9 +20,6 @@ function SearchBar({ onSearch }) {
         placeholder="Поиск технологий..."
         className="search-input-large"
       />
-      <button className="search-button">
-        Загрузить дорожную карту
-      </button>
     </div>
   );
 }
