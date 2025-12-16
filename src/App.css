@@ -499,3 +499,104 @@
   --card-border: var(--card-border-dark);
   --text-primary: #f1f5f9;
 }
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 30px auto;
+  max-width: 800px;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-input-large {
+  flex: 1;
+  min-width: 300px;
+  padding: 16px 24px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.search-input-large:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.2);
+}
+
+.search-button {
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.search-button:hover {
+  background: #334155;
+  transform: translateY(-2px);
+}
+
+.search-button:active {
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .search-input-large {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .search-button {
+  background: #334155;
+}
+
+[data-theme="dark"] .search-button:hover {
+  background: #475569;
+}
+
+.title-input-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.title-input-large {
+  width: 100%;
+  max-width: 700px;
+  padding: 20px 32px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 50px;
+  border: 3px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.title-input-large:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.2);
+}
+
+[data-theme="dark"] .title-input-large {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .title-input-large:focus {
+  border-color: #a78bfa;
+}

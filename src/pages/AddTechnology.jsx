@@ -68,15 +68,17 @@ function AddTechnology() {
           Или добавить вручную
         </Typography>
 
-        <Box component="form" onSubmit={handleManualAdd} sx={{ mt: 3 }}>
-          <TextField
-            label="Название технологии"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            fullWidth
-            required
-            margin="normal"
-          />
+        <Box component="form" onSubmit={handleManualAdd} sx={{ mt: 4 }}>
+          <div className="title-input-container">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Введите название технологии"
+              className="title-input-large"
+              required
+            />
+          </div>
 
           <TextField
             label="Описание (необязательно)"
@@ -86,6 +88,7 @@ function AddTechnology() {
             multiline
             rows={4}
             margin="normal"
+            sx={{ mt: 4 }}
           />
 
           <TextField
@@ -95,6 +98,7 @@ function AddTechnology() {
             onChange={(e) => setCategory(e.target.value)}
             fullWidth
             margin="normal"
+            sx={{ mt: 3 }}
           >
             <MenuItem value="Frontend">Frontend</MenuItem>
             <MenuItem value="Backend">Backend</MenuItem>
@@ -104,7 +108,7 @@ function AddTechnology() {
             <MenuItem value="Другое">Другое</MenuItem>
           </TextField>
 
-          <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+          <Box sx={{ mt: 5, display: 'flex', gap: 2, justifyContent: 'center' }}>
             <Button type="submit" variant="contained" size="large">
               Добавить технологию
             </Button>

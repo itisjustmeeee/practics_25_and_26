@@ -22,7 +22,7 @@ function TechnologyDetail() {
   return (
     <div className="page">
       <Link to="/technologies" className="back-link">
-        ← Назад к списку
+        Назад к списку
       </Link>
 
       <div className="detail-header">

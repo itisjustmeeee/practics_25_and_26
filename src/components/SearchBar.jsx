@@ -5,20 +5,25 @@ function SearchBar({ onSearch }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onSearch(query);
+      onSearch(query.trim());
     }, 500);
 
     return () => clearTimeout(timer);
   }, [query, onSearch]);
 
   return (
-    <input
-      type="text"
-      value={query}
-      onChange={e => setQuery(e.target.value)}
-      placeholder="Поиск технологий..."
-      className="search-input"
-    />
+    <div className="search-container">
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Поиск технологий..."
+        className="search-input-large"
+      />
+      <button className="search-button">
+        Загрузить дорожную карту
+      </button>
+    </div>
   );
 }
 
