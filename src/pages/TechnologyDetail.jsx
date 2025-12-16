@@ -13,7 +13,7 @@ function TechnologyDetail() {
       <div className="page">
         <h1>Технология не найдена</h1>
         <Link to="/technologies" className="btn">
-          ← Назад к списку
+          Назад к списку
         </Link>
       </div>
     );
