@@ -1,9 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import IconButton from '@mui/material/IconButton';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const ThemeContext = createContext();
 
@@ -40,47 +37,45 @@ export function CustomThemeProvider({ children }) {
         primary: mode === 'dark' ? '#f1f5f9' : '#1e293b',
         secondary: mode === 'dark' ? '#94a3b8' : '#64748b',
       },
-      navigation: {
-        background: mode === 'dark' ? '#1e1e1e' : '#e0e7ff',
-        text: mode === 'dark' ? '#f1f5f9' : '#1e293b',
-        active: mode === 'dark' ? '#fbbf24' : '#7c3aed',
-      },
     },
     components: {
       MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundColor: theme.palette.navigation.background,
-            color: theme.palette.navigation.text,
+            backgroundColor: mode === 'dark' ? '#1e1e1e' : '#e0e7ff',
+            color: mode === 'dark' ? '#f1f5f9' : '#1e293b',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: ({ ownerState }) => ({
+            color: mode === 'dark' ? '#f1f5f9' : '#1e293b',
+            ...(ownerState.variant === 'contained' && {
+              backgroundColor: mode === 'dark' ? '#fbbf24' : '#7c3aed',
+              '&:hover': {
+                backgroundColor: mode === 'dark' ? '#f59e0b' : '#6d28d9',
+              },
+            }),
+          }),
+        },
+      },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            color: mode === 'dark' ? '#f1f5f9' : '#1e293b',
           },
         },
       },
       MuiLink: {
         styleOverrides: {
           root: {
-            color: theme.palette.navigation.text,
+            color: mode === 'dark' ? '#f1f5f9' : '#1e293b',
             '&.active': {
-              color: theme.palette.navigation.active,
+              color: mode === 'dark' ? '#fbbf24' : '#7c3aed',
               fontWeight: 'bold',
             },
-          },
-        },
-      }, 
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            color: theme.palette.navigation.text,
-            '&.active': {
-              backgroundColor: theme.palette.navigation.active + '33',
-            },
-          },
-        },
-      },
-      MuiTypography: {
-        styleOverrides: {
-          root: {
-            color: theme.palette.navigation.text,
           },
         },
       },
