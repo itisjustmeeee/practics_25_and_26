@@ -40,23 +40,47 @@ export function CustomThemeProvider({ children }) {
         primary: mode === 'dark' ? '#f1f5f9' : '#1e293b',
         secondary: mode === 'dark' ? '#94a3b8' : '#64748b',
       },
+      navigation: {
+        background: mode === 'dark' ? '#1e1e1e' : '#e0e7ff',
+        text: mode === 'dark' ? '#f1f5f9' : '#1e293b',
+        active: mode === 'dark' ? '#fbbf24' : '#7c3aed',
+      },
     },
     components: {
-      MuiPaper: {
+      MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundImage: 'none',
-            boxShadow: mode === 'dark' 
-              ? '0 8px 32px rgba(0, 0, 0, 0.4)' 
-              : '0 8px 32px rgba(0, 0, 0, 0.08)',
-            border: mode === 'dark' ? '1px solid #334155' : '1px solid #e2e8f0',
+            backgroundColor: theme.palette.navigation.background,
+            color: theme.palette.navigation.text,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          },
+        },
+      },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            color: theme.palette.navigation.text,
+            '&.active': {
+              color: theme.palette.navigation.active,
+              fontWeight: 'bold',
+            },
+          },
+        },
+      }, 
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            color: theme.palette.navigation.text,
+            '&.active': {
+              backgroundColor: theme.palette.navigation.active + '33',
+            },
           },
         },
       },
       MuiTypography: {
         styleOverrides: {
           root: {
-            color: mode === 'dark' ? '#f1f5f9' : '#1e293b',
+            color: theme.palette.navigation.text,
           },
         },
       },
