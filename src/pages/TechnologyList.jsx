@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import TechnologyCard from '../components/TechnologyCard';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import SearchBar from '../components/SearchBar';
+import TechnologyCard from '../components/TechnologyCard';
 import { useTechnologies } from '../hooks/useTechnologies';
 
 function TechnologyList() {
@@ -15,36 +19,47 @@ function TechnologyList() {
   );
 
   return (
-    <div className="page">
-      <div className="page-header">
-        <h1>Все технологии ({technologies.length})</h1>
-        <Link to="/add-technology" className="btn btn-primary">
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+        <Typography variant="h4" component="h1">
+          Все технологии ({technologies.length})
+        </Typography>
+        <Button
+          component={Link}
+          to="/add-technology"
+          variant="contained"
+          color="primary"
+          size="large"
+        >
           + Добавить технологию
-        </Link>
+        </Button>
       </div>
 
       <SearchBar onSearch={setSearchQuery} />
 
-      <div className="tech-grid">
+      <Grid container spacing={3} sx={{ mt: 2 }}>
         {filteredTechnologies.length === 0 ? (
-          <p className="empty-message">
-            {searchQuery 
-              ? `Ничего не найдено по запросу "${searchQuery}"`
-              : 'Технологий пока нет. Добавьте первую!'
-            }
-          </p>
+          <Grid item xs={12}>
+            <Typography variant="h6" color="text.secondary" align="center" sx={{ py: 8 }}>
+              {searchQuery 
+                ? `Ничего не найдено по запросу "${searchQuery}"`
+                : 'Технологий пока нет. Добавьте первую!'
+              }
+            </Typography>
+          </Grid>
         ) : (
           filteredTechnologies.map(tech => (
-            <TechnologyCard
-              key={tech.id}
-              tech={tech}
-              onStatusChange={updateStatus}
-              onNoteChange={updateNote}
-            />
+            <Grid item xs={12} sm={6} md={4} lg={3} key={tech.id}>
+              <TechnologyCard
+                tech={tech}
+                onStatusChange={updateStatus}
+                onNoteChange={updateNote}
+              />
+            </Grid>
           ))
         )}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   );
 }
 

@@ -17,20 +17,15 @@ function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
           <h3>{tech.title}</h3>
         </div>
 
-        <p className="description">{tech.desc}</p>
+        <p className="description">{tech.desc || 'Без описания'}</p>
 
         {tech.deadline && (
           <div className="deadline-info">
             <strong>Дедлайн:</strong> {new Date(tech.deadline).toLocaleDateString('ru-RU')}
-      
             {(() => {
-              const daysLeft = Math.ceil(
-                (new Date(tech.deadline) - new Date()) / (1000 * 60 * 60 * 24)
-              );
+              const daysLeft = Math.ceil((new Date(tech.deadline) - new Date()) / (86400000));
               return daysLeft > 0 ? (
-                <span className="days-left"> ({daysLeft} дн. осталось)</span>
-              ) : daysLeft === 0 ? (
-                <span className="days-left"> (сегодня)</span>
+                <span className="days-left"> ({daysLeft} дн.)</span>
               ) : (
                 <span className="days-overdue"> (просрочено)</span>
               );
@@ -46,11 +41,8 @@ function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
         </div>
       </Link>
 
-      <div className="status-change-section" onClick={(e) => e.stopPropagation()}>
-        <button
-          className="btn-status-change"
-          onClick={() => onStatusChange(tech.id)}
-        >
+      <div className="status-change-section" onClick={e => e.stopPropagation()}>
+        <button className="btn-status-change" onClick={() => onStatusChange(tech.id)}>
           Изменить статус → {label}
         </button>
       </div>
@@ -59,13 +51,12 @@ function TechnologyCard({ tech, onStatusChange, onNoteChange }) {
         className="note-input"
         placeholder="Заметки..."
         value={tech.note || ''}
-        onChange={(e) => onNoteChange(tech.id, e.target.value)}
-        onClick={(e) => e.stopPropagation()}
-        onFocus={(e) => e.stopPropagation()}
+        onChange={e => onNoteChange(tech.id, e.target.value)}
+        onClick={e => e.stopPropagation()}
       />
 
       <div className="click-hint">
-        Кликните по карточке для детального просмотра
+        Клик по карточке — детальный просмотр
       </div>
     </div>
   );

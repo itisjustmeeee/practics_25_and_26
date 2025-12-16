@@ -37,6 +37,7 @@ export function useTechnologies() {
         const nextIndex = (currentIndex + 1) % 3;
         const nextStatus = order[nextIndex];
 
+        // Если завершаем — удаляем дедлайн
         if (nextStatus === 'completed') {
           const { deadline, ...rest } = t;
           return { ...rest, status: nextStatus };
@@ -52,15 +53,10 @@ export function useTechnologies() {
     setTechnologies(prev => prev.map(t => t.id === id ? { ...t, note } : t));
   };
 
-  const deleteTechnology = (id) => {
-    setTechnologies(prev => prev.filter(t => t.id !== id));
-  };
-
   return {
     technologies,
     addTechnology,
     updateStatus,
-    updateNote,
-    deleteTechnology
+    updateNote
   };
 }

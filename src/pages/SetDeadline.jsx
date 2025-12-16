@@ -1,24 +1,25 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTechnologies } from '../hooks/useTechnologies';
+import { useNotification } from '../components/NotificationProvider';
 
 function SetDeadline() {
   const { techId } = useParams();
   const navigate = useNavigate();
+  const { technologies } = useTechnologies();
+  const { showNotification } = useNotification?.() || {};
+
+  const tech = technologies.find(t => t.id === parseInt(techId));
 
   const [deadline, setDeadline] = useState('');
   const [error, setError] = useState('');
 
   const validateDate = (value) => {
-    if (!value) {
-      return 'Дата обязательна';
-    }
+    if (!value) return 'Дата обязательна';
     const selected = new Date(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    if (selected < today) {
-      return 'Дата не может быть в прошлом';
-    }
+    if (selected < today) return 'Дата не может быть в прошлом';
     return '';
   };
 
@@ -30,78 +31,54 @@ function SetDeadline() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationError = validateDate(deadline);
-    if (validationError) {
-      setError(validationError);
+    const err = validateDate(deadline);
+    if (err) {
+      setError(err);
+      showNotification?.(err, 'error');
       return;
     }
 
     const saved = localStorage.getItem('technologies');
-    if (!saved) {
-      alert('Ошибка: данные не найдены');
-      return;
-    }
+    if (!saved) return;
 
-    try {
-      const technologies = JSON.parse(saved);
+    const technologies = JSON.parse(saved);
+    const updated = technologies.map(t =>
+      t.id === parseInt(techId)
+        ? { ...t, deadline, status: 'in-progress' }
+        : t
+    );
 
-      const updated = technologies.map(t =>
-        t.id === parseInt(techId)
-          ? { ...t, deadline, status: 'in-progress' }
-          : t
-      );
-
-      localStorage.setItem('technologies', JSON.stringify(updated));
-
-      alert(`Срок изучения успешно установлен: ${deadline}`);
-      navigate('/technologies');
-    } catch (e) {
-      console.error('Ошибка сохранения дедлайна', e);
-      alert('Произошла ошибка при сохранении');
-    }
+    localStorage.setItem('technologies', JSON.stringify(updated));
+    showNotification?.(`Дедлайн установлен: ${deadline}`, 'success');
+    navigate('/technologies');
   };
+
+  if (!tech) {
+    return (
+      <div className="page">
+        <h1>Технология не найдена</h1>
+        <button onClick={() => navigate('/technologies')} className="btn">Назад</button>
+      </div>
+    );
+  }
 
   return (
     <div className="page deadline-page">
       <h1>Установить срок изучения</h1>
+      <h2>{tech.title}</h2>
 
-      <form onSubmit={handleSubmit} className="deadline-form" noValidate>
+      <form onSubmit={handleSubmit} className="deadline-form">
         <div className="form-group">
-          <label htmlFor="deadline-date">
-            Выберите дату завершения изучения
-          </label>
-          <input
-            id="deadline-date"
-            type="date"
-            value={deadline}
-            onChange={handleChange}
-            min={new Date().toISOString().split('T')[0]}
-            required
-            aria-required="true"
-            aria-invalid={!!error}
-            aria-describedby={error ? 'deadline-error' : undefined}
-          />
-
-          {error && (
-            <p id="deadline-error" className="error-message" role="alert">
-              {error}
-            </p>
-          )}
+          <label>Дата завершения</label>
+          <input type="date" value={deadline} onChange={handleChange} required />
+          {error && <p className="error-message">{error}</p>}
         </div>
 
         <div className="form-actions">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={!!error || !deadline}
-          >
-            Установить срок
+          <button type="submit" className="btn btn-primary" disabled={!!error || !deadline}>
+            Установить
           </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => navigate('/technologies')}
-          >
+          <button type="button" className="btn" onClick={() => navigate('/technologies')}>
             Отмена
           </button>
         </div>

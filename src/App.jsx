@@ -8,27 +8,33 @@ import AddTechnology from './pages/AddTechnology';
 import Statistics from './pages/Statistics';
 import Settings from './pages/Settings';
 import SetDeadline from './pages/SetDeadline';
+import { NotificationProvider } from './components/NotificationProvider';
+import { CustomThemeProvider } from './theme/ThemeProvider';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navigation />
+    <CustomThemeProvider>
+      <NotificationProvider>
+        <Router>
+          <div className="App">
+            <Navigation />
 
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/technologies" element={<TechnologyList />} />
-            <Route path="/technology/:techId" element={<TechnologyDetail />} />
-            <Route path="/add-technology" element={<AddTechnology />} />
-            <Route path="/statistics" element={<Statistics />} />
-            <Route path="/technology/:techId/deadline" element={<SetDeadline />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="*" element={<h1>404 — Страница не найдена</h1>} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/technologies" element={<TechnologyList />} />
+                <Route path="/technology/:techId" element={<TechnologyDetail />} />
+                <Route path="/add-technology" element={<AddTechnology />} />
+                <Route path="/statistics" element={<Statistics />} />
+                <Route path="/technology/:techId/deadline" element={<SetDeadline />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="*" element={<h1>404 — Страница не найдена</h1>} />
+              </Routes>
+            </main>
+          </div>
+        </Router>
+      </NotificationProvider>
+    </CustomThemeProvider>
   );
 }
 

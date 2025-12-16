@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoadmapLoader from '../components/RoadmapLoader';
 import { useTechnologies } from '../hooks/useTechnologies';
+import { useNotification } from '../components/NotificationProvider';
 
 function AddTechnology() {
   const navigate = useNavigate();
   const { addTechnology } = useTechnologies();
+  const { showNotification } = useNotification?.() || {};
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -13,9 +15,8 @@ function AddTechnology() {
 
   const handleManualAdd = (e) => {
     e.preventDefault();
-
     if (!title.trim()) {
-      alert('Введите название технологии');
+      showNotification?.('Введите название технологии', 'error');
       return;
     }
 
@@ -25,22 +26,20 @@ function AddTechnology() {
       category,
       status: 'not-started',
       note: '',
-      iconUrl: ''
+      deadline: ''
     };
 
     addTechnology(newTech);
-    alert('Технология добавлена вручную!');
-    
+    showNotification?.('Технология добавлена вручную!', 'success');
+
     setTitle('');
     setDesc('');
     setCategory('Frontend');
-
-    navigate('/technologies');
   };
 
   const handleApiAdd = (tech) => {
     addTechnology(tech);
-    alert('Технология успешно загружена из внешнего API!');
+    showNotification?.('Технология загружена из API!', 'success');
     navigate('/technologies');
   };
 
@@ -55,56 +54,29 @@ function AddTechnology() {
 
       <section className="manual-add-section">
         <h2>Или добавить вручную</h2>
-
         <form onSubmit={handleManualAdd} className="add-form">
           <div className="form-group">
-            <label htmlFor="title">Название технологии</label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Например: GraphQL"
-              required
-            />
+            <label>Название</label>
+            <input value={title} onChange={e => setTitle(e.target.value)} required />
           </div>
-
           <div className="form-group">
-            <label htmlFor="desc">Описание (необязательно)</label>
-            <textarea
-              id="desc"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-              placeholder="Что вы планируете изучить..."
-              rows="4"
-            />
+            <label>Описание</label>
+            <textarea value={desc} onChange={e => setDesc(e.target.value)} />
           </div>
-
           <div className="form-group">
-            <label htmlFor="category">Категория</label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="Frontend">Frontend</option>
-              <option value="Backend">Backend</option>
-              <option value="Data Science">Data Science</option>
-              <option value="DevOps">DevOps</option>
-              <option value="Mobile">Mobile</option>
-              <option value="Другое">Другое</option>
+            <label>Категория</label>
+            <select value={category} onChange={e => setCategory(e.target.value)}>
+              <option>Fronend</option>
+              <option>Backend</option>
+              <option>Data Science</option>
+              <option>DevOps</option>
+              <option>Mobile</option>
+              <option>Другое</option>
             </select>
           </div>
-
           <div className="form-actions">
-            <button type="submit" className="btn btn-primary">
-              Добавить вручную
-            </button>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => navigate('/technologies')}
-            >
+            <button type="submit" className="btn btn-primary">Добавить</button>
+            <button type="button" className="btn" onClick={() => navigate('/technologies')}>
               Отмена
             </button>
           </div>

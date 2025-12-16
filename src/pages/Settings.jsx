@@ -1,23 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import { useTechnologies } from '../hooks/useTechnologies';
+import { useNotification } from '../components/NotificationProvider';
 
 function Settings() {
   const navigate = useNavigate();
-  const { technologies } = useTechnologies();
+  const { showNotification } = useNotification?.() || {};
 
   const exportData = () => {
-    try {
-      const dataStr = JSON.stringify(technologies, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `technologies-backup-${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      alert('Ошибка экспорта данных');
-    }
+    const data = localStorage.getItem('technologies') || '[]';
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `technologies-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    showNotification?.('Данные экспортированы', 'success');
   };
 
   const importData = (e) => {
@@ -25,32 +21,24 @@ function Settings() {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = (ev) => {
       try {
-        const imported = JSON.parse(event.target.result);
+        const imported = JSON.parse(ev.target.result);
         if (!Array.isArray(imported)) throw new Error('Неверный формат');
-
-        const valid = imported.every(t => 
-          typeof t.title === 'string' && 
-          ['not-started', 'in-progress', 'completed'].includes(t.status)
-        );
-
-        if (!valid) throw new Error('Некорректные данные');
-
         localStorage.setItem('technologies', JSON.stringify(imported));
-        alert('Данные успешно импортированы! Перезагрузите страницу.');
+        showNotification?.('Данные импортированы', 'success');
         window.location.reload();
       } catch (err) {
-        alert(`Ошибка импорта: ${err.message}`);
+        showNotification?.(`Ошибка импорта: ${err.message}`, 'error');
       }
     };
     reader.readAsText(file);
   };
 
   const clearData = () => {
-    if (window.confirm('Удалить все данные? Это действие необратимо!')) {
+    if (confirm('Удалить все данные?')) {
       localStorage.removeItem('technologies');
-      alert('Данные очищены');
+      showNotification?.('Все данные удалены', 'warning');
       window.location.reload();
     }
   };
@@ -64,7 +52,7 @@ function Settings() {
         <button className="btn btn-primary" onClick={exportData}>
           Экспорт в JSON
         </button>
-        <label className="btn btn-import" style={{ display: 'inline-block', cursor: 'pointer' }}>
+        <label className="btn btn-secondary">
           Импорт из JSON
           <input type="file" accept=".json" onChange={importData} style={{ display: 'none' }} />
         </label>
@@ -78,7 +66,7 @@ function Settings() {
       </section>
 
       <button className="btn" onClick={() => navigate(-1)}>
-        Назад
+        ← Назад
       </button>
     </div>
   );
